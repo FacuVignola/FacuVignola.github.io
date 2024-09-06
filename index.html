@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title> Menu </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/estilosindex.css">
@@ -43,30 +44,35 @@
 
     <section id="cargar" class="p-3">
         <!--Formulario de carga Francisco -->
-        <h2 class="p-1">Cargar Pedido</h2><br>
+        <h2 class="p-1">Carga de datos</h2><br>
         <!-- Los input estan supuestos a cambiar -->
-        <form class="form container needs-validation" novalidate>
-            <div class="row">
-                <div class="mb-3 input-group col-3">
-                    <div class="input-group">
-                        <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre" required>
-                        <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido" required>
-                    </div>
+        <div class="container-lg">
+            <div class="row d-flex justify-content-evenly">
+                <div class="col-md-5 adminchargebox rounded p-5">
+                    <form action="">
+                        <h3 class="mb-4">Clientes</h3>
+                        <input type="text" class="form-control mb-3" placeholder="Nombre" name="" id="">
+                        <input type="text" class="form-control mb-3" placeholder="Apellido" name="" id="">
+                        <input type="text" class="form-control mb-4" placeholder="Telefono" name="" id="">
+                        <button type="submit" class="btn btn-light">Cargar cliente</button>
+                    </form>
                 </div>
-                <div class="mb-3 col-7">
-                    <input type="text" aria-label="Dispositivo"  class="form-control" placeholder="Dispositivo">
+                <div class="col-md-5 adminchargebox rounded p-5">
+                    <form action="">
+                        <h3 class="mb-4">Dispositivos</h3>
+                        <input type="text" class="form-control mb-3" placeholder="Tipo de dispositivo" name="" id="">
+                        <textarea class="form-control mb-3" name="" placeholder="Descripcion" id="" rows="3"></textarea>
+                        <select class="form-select mb-3" name="" id="">
+                            <option selected>Eliga un cliente previamente cargado</option>
+                            <option value="1">Juan</option>
+                            <option value="2">Maria</option>
+                            <option value="3">Carlos</option>
+                        </select>
+                        <button type="submit" class="btn btn-light">Cargar Dispositivo</button>
+                    </form>
                 </div>
             </div>
-            <div class="pb-3">    
-                <div class="input-group mb-3">
-                    <textarea rows="2" cols="50" aria-label="Descripcion del problema" class="form-control" placeholder="Descripcion del problema"></textarea>
-                </div><br>
-                <div>
-                    <button type="submit" class="btn btn-light">Cargar</button>
-                </div>
-            </div>
-            
-        </form>
+        </div>
     </section>
 
     <section id="admin" class="p-3">
@@ -74,12 +80,13 @@
         <!-- Los input estan supuestos a cambiar -->
         <h2> Administracion de pedidos</h2>
         <div class="container-lg">
-            <div class="row">
+            <div class="row justify-content-evenly">
                 <div class="col-md-5 p-5 rounded adminchargebox">
+                    <h3 class="mb-3">Busqueda</h3>
                         <select class="form-select mb-3" id="inputGroupSelect01">
                             <option selected>Seleccione la tabla de busqueda</option>
-                            <option value="1">Clientes</option>
-                            <option value="2">Pedidos</option>
+                            <option value="1">Cliente</option>
+                            <option value="2">Dispositivo</option>
                         </select>
                             <select class="form-select mb-3" id="inputGroupSelect01">
                                 <option selected>Seleccione el dato de busqueda</option>
@@ -90,18 +97,15 @@
                     <input type="text" class="form-control mb-3" name="" id="" placeholder="Inserte el dato">
                     <button type="button" class="btn btn-light">Buscar</button>
                 </div>
-                <div class="col-md-1">
-
-                </div>
                 <div class="col-md-6 p-5 rounded adminchargebox">
                     <form class="container-fluid">
                         <div class="row">
+                            <h3 class="mb-3">Registro</h3>
                             <div class="mb-3 input-group col-5">
                                 <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre">
                                 <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido">
                             </div>
                             <div class="mb-3 col-7">
-                                
                                 <input type="text" class="form-control" placeholder="Dispositivo">
                             </div>
                         </div>
@@ -124,7 +128,7 @@
     </section>
     <section id="lista" class="p-1">
         <!--Lista Pedidos/Cliente Facundo -->
-        <h2>Lista</h2>
+        <h2 class="ps-2">Lista</h2>
         <div class="container mt-5">
             <table class="table table-striped">
                 <thead class="thead-dark">
@@ -213,5 +217,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="javaScript/code.js"></script>
 </body>
 </html>
