@@ -51,9 +51,12 @@
                 <div class="col-md-5 adminchargebox rounded p-5">
                     <form action="">
                         <h3 class="mb-4">Clientes</h3>
-                        <input type="text" class="form-control mb-3" placeholder="Nombre" name="" id="">
-                        <input type="text" class="form-control mb-3" placeholder="Apellido" name="" id="">
-                        <input type="text" class="form-control mb-4" placeholder="Telefono" name="" id="">
+                        <input type="text" class="form-control" placeholder="Nombre" name="" id="txtNombreCarga">
+                        <label id="msgerror1" class="error">El nombre no es valido</label><br>
+                        <input type="text" class="form-control" placeholder="Apellido" name="" id="txtApellidoCarga">
+                        <label id="msgerror2" class="error">El apellido no es valido</label><br>
+                        <input type="text" class="form-control" placeholder="Telefono" name="" id="txtTelefonoCarga">
+                        <label id="msgerror3" class="error">El telefono no es valido</label><br>
                         <button type="submit" class="btn btn-light">Cargar cliente</button>
                     </form>
                 </div>
@@ -211,11 +214,9 @@
                 </tbody>
             </table>
         </div>
-        
     </section>
 
-
-
+    <script src="/javaScript/code.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="javaScript/code.js"></script>
 </body>
