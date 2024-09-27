@@ -34,3 +34,10 @@ body{
 .adminchargebox{
     background-color: #7EA16B !important;
 }
+
+.error{
+    color: red;
+    margin-top: 5px;
+    display: none;
+    text-shadow: 5px;
+}
