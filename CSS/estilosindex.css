@@ -41,3 +41,8 @@ body{
     display: none;
     text-shadow: 5px;
 }
+
+
+option.ocultar{
+    display:none;
+}
