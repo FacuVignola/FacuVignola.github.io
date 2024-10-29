@@ -1,3 +1,13 @@
+<%-- 
+    Document   : index
+    Created on : 28/10/2024, 20:00:39
+    Author     : Tacho
+--%>
+
+<%@page import="java.util.List"%>
+<%@page import="com.logica.cliente"%>
+<%@page import="com.persistencia.controladoraPersistencia"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +19,7 @@
     <link rel="stylesheet" href="CSS/estilosindex.css">
 </head>
 <body>
+    <%controladoraPersistencia ctrlP = new controladoraPersistencia();%>
     <!--navbar Martin -->
     <nav class="navbar navbar-expand-lg mb-1 p-3 border-bottom border-success">
         <div class="container-fluid">
@@ -22,7 +33,10 @@
                         <a href="#cargar" class="nav-link">Cargar pedidos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#admin" class="nav-link">Administracion de pedidos</a>
+                        <a href="#adminCliente" class="nav-link">Administracion de clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#adminDispositivo" class="nav-link">Administracion de dispositivos</a>
                     </li>
                     <li class="nav-item">
                         <a href="#lista" class="nav-link">Listas</a>
@@ -33,7 +47,7 @@
                     </li>
                     -->
                     <li class="nav-item">
-                        <a href="login.html" class="nav-link">Cerrar Sesion</a>
+                        <a href="login.jsp" class="nav-link">Cerrar Sesion</a>
                     </li>
                 </ul>
             </div>
@@ -51,15 +65,16 @@
         <div class="container-lg">
             <div class="row d-flex justify-content-evenly">
                 <div class="col-md-5 adminchargebox rounded p-5">
-                    <form action="" method="">
+                    <form action="svClienteCrearBuscarN" method="POST" id="formCargarCliente">
                         <h3 class="mb-4">Datos del Cliente</h3>
-                        <input type="text" class="form-control" placeholder="Nombre" name="" id="txtNombreCarga">
+                        <input type="text" class="form-control" placeholder="Nombre" name="nombreCarga" id="txtNombreCarga">
                         <label id="msgerror1" class="error">El nombre no es valido</label><br>
-                        <input type="text" class="form-control" placeholder="Apellido" name="" id="txtApellidoCarga">
+                        <input type="text" class="form-control" placeholder="Apellido" name="apellidoCarga" id="txtApellidoCarga">
                         <label id="msgerror2" class="error">El apellido no es valido</label><br>
-                        <input type="text" class="form-control" placeholder="Telefono" name="" id="txtTelefonoCarga">
+                        <input type="text" class="form-control" placeholder="Telefono" name="telefonoCarga" id="txtTelefonoCarga">
                         <label id="msgerror3" class="error">El telefono no es valido</label><br>
                         <button type="submit" class="btn btn-light">Cargar cliente</button>
+                        <div id="mensajeExito" style="display:none; color: green; margin-top: 10px;"></div>
                     </form>
                 </div>
                 <div class="col-md-5 adminchargebox rounded p-5">
@@ -80,10 +95,10 @@
         </div>
     </section>
     
-    <section id="admin" class="p-3">
+    <section id="adminCliente" class="p-3">
         <!--Formularios de admin Facundo,Francisco y Martin-->
         <!-- Los input estan supuestos a cambiar -->
-        <h2> Administracion de pedidos</h2>
+        <h2> Administracion de clientes</h2>
         <div class="container-lg">
             <div class="row justify-content-evenly">
                 <div class="col-md-5 p-5 rounded adminchargebox">
@@ -101,13 +116,93 @@
                             <option value="3">Dispositivo</option> 
                         </select>
                         <input type="text" class="form-control mb-3" name="" id="" placeholder="Inserte el dato"> -->
-                        <input type="text" class="form-control mb-2" id="inputAdminBusqueda" placeholder="Buscar cliente...">
-                                <select id="spinnerModificacionAdmin" class="form-select mb-3" size="10">
+                        <input type="text" class="form-control mb-2" id="inputAdminBusquedaCliente" placeholder="Buscar cliente...">
+                                <select id="spinnerAdminCliBusq" class="form-select mb-3" size="10">
+                                    
+                                    <option value="1">Este anda</option>
+                                    <option value="2">Carlos</option>
+                                    <option value="3">Maria</option>
+                                    
+                                </select>
+                        <button type="button" class="btn btn-light">Buscar</button>
+                    </form>
+                </div>
+                <div class="col-md-6 p-5 rounded adminchargebox">
+                    <form action="" method="" class="container-fluid">
+                        <div class="row">
+                            <h3 class="mb-3">Registro</h3>
+                            <div class="mb-3 input-group col-5">
+                                <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre">
+                                <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido">
+                            </div>
+                            <div class="mb-3 col-7">
+                                <input type="text" class="form-control" placeholder="Telefono">
+                            </div>
+                            <!--
+                            <div class="mb-3 col-9">
+                                
+                                <input type="text" class="form-control mb-2" id="inputModificarRegCliente" placeholder="Buscar cliente...">
+                                <select id="spinnerModificacionRegCli" class="form-select mb-3" size="3">
                                     <option value="1">Juan</option>
                                     <option value="2">Carlos</option>
                                     <option value="3">Maria</option>
                                 </select>
-                        <button type="button" class="btn btn-light">Buscar</button>
+                                
+                                <select class="form-select mb-3" id="inputGroupSelect01">
+                                    <option selected>Estado del dispositivo</option>
+                                    <option value="1">En reparacion</option>
+                                    <option value="2">Listo</option>
+                                    <option value="3">Obsoleto</option>
+                                    <option value="4">Entregado</option>                                    
+                                </select>
+                            </div>
+                                -->
+                        </div>
+                        <div class="pb-3">
+                            <!--
+                            <div class="input-group has-validation mb-3">
+                                <textarea rows="2" cols="50" class="form-control" placeholder="Descripcion del problema"></textarea>
+                            </div>
+                            -->
+                            <button type="button" class="btn btn-light">Modificar</button>
+                            <button type="button" class="btn btn-light">Borrar</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </section>
+    <section id="adminDispositivo" class="p-3">
+        <!--Formularios de admin Facundo,Francisco y Martin-->
+        <!-- Los input estan supuestos a cambiar -->
+        <h2> Administracion de dispositivo</h2>
+        <div class="container-lg">
+            <div class="row justify-content-evenly">
+                <div class="col-md-5 p-5 rounded adminchargebox">
+                    <h3 class="mb-3">Busqueda</h3>
+                    <form action="" method="">
+                        <!-- <select class="form-select mb-3" id="inputGroupSelect01">
+                            <option selected>Seleccione la tabla de busqueda</option>
+                            <option value="1">Cliente</option>
+                            <option value="2">Dispositivo</option>
+                        </select>
+                        <select class="form-select mb-3" id="inputGroupSelect01">
+                            <option selected>Seleccione el dato de busqueda</option>
+                            <option value="1">Nombre</option>
+                            <option value="2">Apellido</option>
+                            <option value="3">Dispositivo</option> 
+                        </select>
+                        <input type="text" class="form-control mb-3" name="" id="" placeholder="Inserte el dato"> -->
+                        <input type="text" class="form-control mb-2" id="inputAdminBusquedaDispositivo" placeholder="Buscar dispositivo...">
+                                <select id="spinnerAdminDispBusq" class="form-select mb-3" size="10">
+                                    
+                                    <option value="1">impresora</option>
+                                    <option value="2">telefono</option>
+                                    <option value="3">Monitor</option>
+                                    
+                                </select>
+                        <button type="button" class="btn btn-light">Buscar dispositivo</button>
                     </form>
                 </div>
                 <div class="col-md-6 p-5 rounded adminchargebox">
@@ -122,8 +217,8 @@
                                 <input type="text" class="form-control" placeholder="Dispositivo">
                             </div>
                             <div class="mb-3 col-9">
-                                <input type="text" class="form-control mb-2" id="inputAdminBusqueda" placeholder="Buscar cliente...">
-                                <select id="spinnerModificacionAdmin" class="form-select mb-3">
+                                <input type="text" class="form-control mb-2" id="inputModificarRegDisp" placeholder="Buscar dispositivo...">
+                                <select id="spinnerModificarRegDisp" class="form-select mb-3" size="3">
                                     <option value="1">Juan</option>
                                     <option value="2">Carlos</option>
                                     <option value="3">Maria</option>
@@ -258,39 +353,3 @@
 <script src="javaScript/code.js"></script>
 </body>
 </html>
-
-<!-- 
-<input type="text" id="searchInput" onkeyup="filterOptions()" placeholder="Buscar...">
-
-<select id="spinner" size="5">
-    <option>Argentina</option>
-    <option>Brasil</option>
-    <option>Chile</option>
-    <option>Colombia</option>
-    <option>Perú</option>
-    <option>Uruguay</option>
-    <option>Venezuela</option>
-    <option>Bolivia</option>
-    <option>Paraguay</option>
-    <option>Ecuador</option>
-</select>
-
-<script>
-    function filterOptions() {
-    var input, filter, select, options, i;
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    select = document.getElementById("spinner");
-    options = select.getElementsByTagName("option");
-    
-    // Recorre todas las opciones y las muestra u oculta según el filtro
-    for (i = 0; i < options.length; i++) {
-    if (options[i].text.toUpperCase().indexOf(filter) > -1) {
-    options[i].classList.remove("hidden"); // Muestra la opción
-    } else {
-    options[i].classList.add("hidden");   // Oculta la opción
-    }
-    }
-    }
-</script>
--->

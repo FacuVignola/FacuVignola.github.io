@@ -49,9 +49,8 @@ public class controladoraPersistencia {
         return clienteJpa.findcliente(id);
     }
 
-    public ArrayList<cliente> consultarListaCliente() {
-        List<cliente> listacli= clienteJpa.findclienteEntities();
-        ArrayList<cliente> listaCliente = new ArrayList<cliente> (listacli);
+    public List<cliente> consultarListaCliente() {
+        List<cliente> listaCliente= clienteJpa.findclienteEntities();
         return listaCliente;
     }
     

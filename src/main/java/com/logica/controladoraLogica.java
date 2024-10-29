@@ -30,7 +30,7 @@ public class controladoraLogica {
     public cliente consultarCliente(int id){
         return ctrlPersistencia.consultarCliente(id);
     }
-    public ArrayList<cliente> consultarListaCliente(){
+    public List<cliente> consultarListaCliente(){
         return ctrlPersistencia.consultarListaCliente();
     }
     

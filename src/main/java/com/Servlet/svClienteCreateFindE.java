@@ -39,16 +39,16 @@ public class svClienteCreateFindE extends HttpServlet {
         listaClientes = ctrl.consultarListaCliente();
         
          HttpSession misesion =request.getSession();
-         misesion.setAttribute("listaCliente", listaClientes);
+         misesion.setAttribute("listaClientes", listaClientes);
          response.sendRedirect("MostrarCliente.jsp");
         
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nom = request.getParameter("nombre");
-        String ape = request.getParameter("apellido");
-        int tel = Integer.parseInt(request.getParameter("telefono"));
+        String nom = request.getParameter("nombreCarga");
+        String ape = request.getParameter("apellidoCarga");
+        Long tel = Long.parseLong(request.getParameter("telefonoCarga"));
         
         cliente cli = new cliente();
         
