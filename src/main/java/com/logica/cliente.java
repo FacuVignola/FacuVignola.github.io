@@ -27,7 +27,7 @@ public class cliente implements Serializable {
     @Basic
     private String nombre;
     private String apellido;
-    private int telefono;
+    private Long telefono;
     @OneToMany (mappedBy="dueño")
     private List<dispositivo> listaDispositivos;
     
@@ -35,7 +35,7 @@ public class cliente implements Serializable {
 
     public cliente (){}
 
-    public cliente(String nombre, String apellido, int telefono, List<dispositivo> listaDispositivos) {
+    public cliente(String nombre, String apellido, Long telefono, List<dispositivo> listaDispositivos) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
@@ -68,11 +68,11 @@ public class cliente implements Serializable {
         this.apellido = apellido;
     }
 
-    public int getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 
@@ -83,6 +83,10 @@ public class cliente implements Serializable {
     public void setListaDispositivos(List<dispositivo> listaDispositivos) {
         this.listaDispositivos = listaDispositivos;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido + " " + telefono;
+    }
+        
 }

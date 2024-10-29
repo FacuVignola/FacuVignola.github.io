@@ -46,7 +46,7 @@ public class svClienteEditFind extends HttpServlet {
             throws ServletException, IOException {
          String nom = request.getParameter("nombre");
         String ape = request.getParameter("apellido");
-        int tel = Integer.parseInt(request.getParameter("telefono"));
+        Long tel = Long.parseLong(request.getParameter("telefono"));
         
         cliente cli = (cliente) request.getSession().getAttribute("clienteModificar");
         

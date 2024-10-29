@@ -21,12 +21,12 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author usr
+ * @author Tacho
  */
 public class clienteJpaController implements Serializable {
-    
-    public clienteJpaController(){
-        this.emf=Persistence.createEntityManagerFactory("proyectoPU");
+
+    public clienteJpaController() {
+        emf=Persistence.createEntityManagerFactory("proyectoPU");
     }
 
     public clienteJpaController(EntityManagerFactory emf) {

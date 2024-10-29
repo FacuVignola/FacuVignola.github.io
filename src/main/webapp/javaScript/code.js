@@ -37,20 +37,12 @@ document.addEventListener('DOMContentLoaded',function(){
         }
     }
     
-    // Busqueda de cliente en administracion, en el apartado de modificar para cambiar un dueño.
-    let inputModfAdmin, selectAdmin, optionsAdmin, i;
-    inputModfAdmin = document.getElementById("inputAdminBusqueda");
-    selectAdmin = document.getElementById("spinnerModificacionAdmin");
-    optionsAdmin = selectAdmin.getElementsByTagName("option");
-    
-    // Evento lanzador de la busqueda para la modificacion
-    inputModfAdmin.addEventListener('keyup',function(){
-        let filtroAdmin = inputModfAdmin.value.toUpperCase();
-        filtroOpciones(filtroAdmin,optionsAdmin,i);
-    });
+    // -------------------------------------------------------------------------------------
+    // - - - - - - - - - - - - - - - - - BUSQUEDAS - - - - - - - - - - - - - - - - - - - - - 
+    // -------------------------------------------------------------------------------------
     
     // Busqueda de cliente en carga para asignar a dispositivo
-    let inputCarga, selectCarga, optionsCarga, j;
+    let inputCarga, selectCarga, optionsCarga;
     inputCarga = document.getElementById("inputCarga");
     selectCarga = document.getElementById("spinnerCarga");
     optionsCarga = selectCarga.getElementsByTagName("option");
@@ -58,11 +50,63 @@ document.addEventListener('DOMContentLoaded',function(){
     // Evento lanzador de la busqueda para la carga
     inputCarga.addEventListener('keyup',function(){
         let filtroCarga = inputCarga.value.toUpperCase();
-        filtroOpciones(filtroCarga,optionsCarga,j);
+        filtroOpciones(filtroCarga,optionsCarga);
+    });
+    
+    // Busqueda de cliente en administracion, en el apartado de busqueda de cliente
+    
+    let inputAdminBusquedaCliente, selectAdminCliBusq, optionsAdminBusqCli;
+    inputAdminBusquedaCliente = document.getElementById("inputAdminBusquedaCliente");
+    selectAdminCliBusq = document.getElementById("spinnerAdminCliBusq");
+    optionsAdminBusqCli = selectAdminCliBusq.getElementsByTagName("option");
+    
+    // Evento lanzador de la busqueda para la modificacion
+    
+    inputAdminBusquedaCliente.addEventListener('keyup',function(){
+        let filtroAdmin = inputAdminBusquedaCliente.value.toUpperCase();
+        filtroOpciones(filtroAdmin,optionsAdminBusqCli);
+    });
+    
+    /*
+    // Busqueda de clientes en administracion de clientes, en el apartado de modificacion
+    let inputModificarRegCli, selectModificarRegCli, optionModificarRegCli;
+    inputModificarRegCli = document.getElementById("inputModificarRegCliente");
+    selectModificarRegCli = document.getElementById("spinnerModificacionRegCli");
+    optionModificarRegCli = selectModificarRegCli.getElementsByTagName("option");
+    
+    //Evento lanzador de la busqueda para la modificacion del registro
+    inputModificarRegCli.addEventListener('keyup',function(){
+       let filtroReg = inputModificarRegCli.value.toUpperCase(); 
+       filtroOpciones(filtroReg,optionModificarRegCli);
+    });
+    */
+    
+    // Busqueda de dispositivos en administracion, en el apartado de busqueda de dispositivos
+    let inputAdminBusquedaDisp,selectAdminDispBusq,optionAdminDispBusq;
+    inputAdminBusquedaDisp = document.getElementById("inputAdminBusquedaDispositivo");
+    selectAdminDispBusq = document.getElementById("spinnerAdminDispBusq");
+    optionAdminDispBusq = selectAdminDispBusq.getElementsByTagName("option");
+    
+    //Evento lanzador
+    inputAdminBusquedaDisp.addEventListener('keyup',function(){
+       let filtroReg = inputAdminBusquedaDisp.value.toUpperCase();
+       filtroOpciones(filtroReg,optionAdminDispBusq);
+    });
+    
+    //Busqueda de cliente en administracion de dispositivos, apartado de modificacion de dispositivos
+    let inputModificarRegDisp, selectModificarRegDisp, optionModificarRegDisp;
+    inputModificarRegDisp = document.getElementById("inputModificarRegDisp");
+    selectModificarRegDisp = document.getElementById("spinnerModificarRegDisp");
+    optionModificarRegDisp = selectModificarRegDisp.getElementsByTagName("option");
+    
+    //Evento lanzador
+    inputModificarRegDisp.addEventListener('keyup', function(){
+        let filtroReg = inputModificarRegDisp.value.toUpperCase();
+        filtroOpciones(filtroReg,optionModificarRegDisp);
     });
     
     // Filtro para ocultar o mostrar las opciones segun el filtro
-    function filtroOpciones(filter,options,i){
+    function filtroOpciones(filter,options){
         for (i = 0; i < options.length; i++) {
             if (options[i].text.toUpperCase().indexOf(filter) > -1) {
                 options[i].classList.remove("ocultar"); // Muestra la opción
@@ -72,7 +116,7 @@ document.addEventListener('DOMContentLoaded',function(){
         }
     };
 
-    let inputListaPedido = document.getElementById("InputBusq")
+    let inputListaPedido = document.getElementById("InputBusq");
 
     inputListaPedido.addEventListener("keyup",function(){
         let tablaListPedidos = document.getElementById("TablaListaPedidos");
@@ -102,7 +146,67 @@ document.addEventListener('DOMContentLoaded',function(){
             rows[i].style.display = found ? "" : "none";
         }
     }
+    
+    function CargarListaClientes(selectId){
+        fetch("/ProyectoPracticas/svClienteCrearBuscarN")
+                .then(response => response.json())
+                .then(data =>{
+                    const select = document.getElementById(selectId);
+                    select.innerHTML='';
+                
+                data.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente.id;
+                    option.textContent = `${cliente.nombre} - ${cliente.apellido} - ${cliente.telefono}`;
+                    select.appendChild(option);
+                });         
+        });
+    }
+    
+    CargarListaClientes("spinnerCarga");
+    CargarListaClientes("spinnerAdminCliBusq");
+    CargarListaClientes("spinnerModificacionRegCli");
+    CargarListaClientes("spinnerAdminDispBusq");
+    CargarListaClientes("spinnerModificarRegDisp")
+    
+    document.getElementById("formCargarCliente").addEventListener('submit',function(event) {
+        event.preventDefault();
+        
+        if (!nombreCargaInput.value || !apellidoCargaInput.value || !telefonoCargaInput.value) {
+            alert("Por favor, complete todos los campos.");
+            return;
+        }
+        
+        const nombre = nombreCargaInput.value;
+        const apellido = apellidoCargaInput.value;
+        const telefono = telefonoCargaInput.value;
+        
+        fetch('/ProyectoPracticas/svClienteCrearBuscarN',{
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({nombre, apellido, telefono})
+            })
+                .then(response => {
+                    if(response.ok){
+                        CargarListaClientes("spinnerCarga");
+                        CargarListaClientes("spinnerAdminCliBusq");
+                        CargarListaClientes("spinnerModificacionRegCli");
+                        CargarListaClientes("spinnerAdminDispBusq");
+                        CargarListaClientes("spinnerModificarRegDisp");
+                        document.getElementById("formCargarCliente").reset();
+                        alert("Cliente cargado exitosamente!");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error', error );
+                    alert("Hubo un problema al cargar al cliente: "+ error.message );
+                });  
+    });
+    
 });
+
 
 // function filtroOpciones() {
 //     var input, filtro, select, options, i;
