@@ -19,7 +19,7 @@
                     <label for="User">Usuario:</label><br>
                     <input type="text" placeholder="Usuario" class="textboxform" name="username"><br>
                     <label for="Contra">Clave:</label><br>  
-                    <input type="text" placeholder="Clave" class="textboxform" name="pass"><br>
+                    <input type="password" placeholder="Clave" class="textboxform" name="pass"><br>
                     <br><!-- No funciona el boton de abajo -->
                     <!--
                     <button class="log_button" onclick="window.location.href='index.html'"> Iniciar Sesion </button>
