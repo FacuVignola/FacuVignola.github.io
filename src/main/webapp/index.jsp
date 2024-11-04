@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="CSS/estilosindex.css">
 </head>
 <body>
-    <%controladoraPersistencia ctrlP = new controladoraPersistencia();%>
+    <% //controladoraPersistencia ctrlP = new controladoraPersistencia();%>
     <!--navbar Martin -->
     <nav class="navbar navbar-expand-lg mb-1 p-3 border-bottom border-success">
         <div class="container-fluid">

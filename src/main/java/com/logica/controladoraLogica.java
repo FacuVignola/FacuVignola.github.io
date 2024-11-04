@@ -16,7 +16,6 @@ import java.util.List;
 public class controladoraLogica {
     
         controladoraPersistencia ctrlPersistencia= new controladoraPersistencia();
-        usuario usu=new usuario();
     
     public void crearCliente(cliente clienteNuevo){
         ctrlPersistencia.crearCliente(clienteNuevo);
@@ -94,13 +93,15 @@ public class controladoraLogica {
         boolean ingreso=false;
         
         List<usuario> listaUser = new ArrayList<usuario>();
-        listaUser = ctrlPersistencia.consultarListaUsuario();
+        listaUser = ctrlPersistencia.consultaUsuario();
         
         for(usuario user: listaUser){
-            if(usu.getUser().equals(username)){
-                if(usu.getContrasena().equals(pass)){
+            if(user.getUser().equals(username)){
+                if(user.getContrasena().equals(pass)){
                     ingreso=true;
-                }else{ingreso=false;}
+                }else{
+                    ingreso=false;
+                }
             }
         }
         return ingreso;

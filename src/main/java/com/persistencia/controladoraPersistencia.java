@@ -9,6 +9,7 @@ import com.logica.cliente;
 import com.logica.pedido;
 import com.logica.usuario;
 import com.logica.dispositivo;
+import com.mysql.cj.Query;
 import com.persistencia.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+     *
  * @author usr
  */
 public class controladoraPersistencia {
@@ -144,4 +145,8 @@ public class controladoraPersistencia {
         return listaUsuario;
     }
     
+    public List<usuario> consultaUsuario(){
+        return usuarioJpa.findusuarioEntities();
+    }
+   
 }

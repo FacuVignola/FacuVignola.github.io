@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,16 +15,16 @@
     <section class="grid text-center ">
         <div class="caja position-absolute top-50 start-50 translate-middle p-5 border-success">
             <h1 class="">Inicio de Sesion</h1>
-                <form action="user" action="svLogin" method="POST">
+                <form action="svLogin" method="POST">
                     <label for="User">Usuario:</label><br>
-                    <input type="text"placeholder="Usuario" class="textboxform" name="username"><br>
+                    <input type="text" placeholder="Usuario" class="textboxform" name="username"><br>
                     <label for="Contra">Clave:</label><br>  
-                    <input type="password"placeholder="Clave" class="textboxform" name="pass"><br>
+                    <input type="text" placeholder="Clave" class="textboxform" name="pass"><br>
                     <br><!-- No funciona el boton de abajo -->
                     <!--
                     <button class="log_button" onclick="window.location.href='index.html'"> Iniciar Sesion </button>
                     -->
-                    <a class="btn btn-light">Iniciar Sesion</a>
+                    <button type="submit" class="btn btn-light">Iniciar Sesion</button>
                 </form>
         </div>
     </section>

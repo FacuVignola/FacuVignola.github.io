@@ -13,45 +13,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.logica.controladoraLogica;
-import com.logica.usuario;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author usr
  */
-@WebServlet(name = "svLogin", urlPatterns = {"/svLogin"})
-public class svLogin extends HttpServlet {
-    
-            controladoraLogica ctrl=new controladoraLogica();
-    
+@WebServlet(name = "svDispositivosCreate", urlPatterns = {"/svDispositivosCreate"})
+public class svDispositivosCreate extends HttpServlet {
+    controladoraLogica ctrl=new controladoraLogica();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         }
     
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String username = request.getParameter("username");
-            String pass = request.getParameter("pass");
-            
-            boolean validacion=false;
-            validacion = ctrl.validarIngreso(username,pass);
-            
-            
-            if(validacion==true){
-                HttpSession misesion = request.getSession(true);
-                misesion.setAttribute("username", username);
-                response.sendRedirect("index.jsp");
-            }
-            else{
-                response.sendRedirect("loginError.jsp");
-            }
+        String tipoDis=request.getParameter("tipoDis");
+        String mod = request.getParameter("mode");
+        String Desc = request.getParameter("desc");
+        String due = request.getParameter("dueño");
     }
 
     @Override
