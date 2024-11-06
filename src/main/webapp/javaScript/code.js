@@ -196,7 +196,12 @@ document.addEventListener('DOMContentLoaded',function(){
                         CargarListaClientes("spinnerAdminDispBusq");
                         CargarListaClientes("spinnerModificarRegDisp");
                         document.getElementById("formCargarCliente").reset();
-                        alert("Cliente cargado exitosamente!");
+                        let msgexito = document.getElementById("msgExitoCli");
+                        msgexito.style.display="block";
+                        setTimeout(() => {
+                            msgexito.style.display="none";
+                        }, 3000);
+                        
                     }
                 })
                 .catch(error => {

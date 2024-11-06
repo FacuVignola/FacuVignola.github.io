@@ -74,8 +74,9 @@
                         <input type="text" class="form-control" placeholder="Telefono" name="telefonoCarga" id="txtTelefonoCarga">
                         <label id="msgerror3" class="error">El telefono no es valido</label><br>
                         <button type="submit" class="btn btn-light">Cargar cliente</button>
-                        <div id="mensajeExito" style="display:none; color: green; margin-top: 10px;"></div>
                     </form>
+                    <label id="msgExitoCli" class="msgExito">Cliente cargado exitosamente</label>
+                    
                 </div>
                 <div class="col-md-5 adminchargebox rounded p-5">
                     <form action="" method="">
