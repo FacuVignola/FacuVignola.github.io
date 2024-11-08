@@ -5,8 +5,10 @@
  */
 package com.Servlet;
 
+import com.google.gson.Gson;
 import com.logica.cliente;
 import com.logica.controladoraLogica;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,19 +34,49 @@ public class svClienteEditFind extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            int clienteModif = Integer.parseInt(request.getParameter("idClienteEdit"));
+        int clienteModif = Integer.parseInt(request.getParameter("id"));
+        
+        cliente cli = ctrl.consultarCliente(clienteModif);
+        
+        if(cli!=null){
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
             
-            cliente cli = ctrl.consultarCliente(clienteModif);
+            String json = new Gson().toJson(cli);
             
-            HttpSession misesion = request.getSession();
-            misesion.setAttribute("clienteModificar",cli);
-            response.sendRedirect("modificarCliente");
+            response.getWriter().write(json);
+        }
+        else
+        {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write("{\"error\": \"ID inválido\"}");
+        }
     }
+    
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String nom = request.getParameter("nombre");
+        BufferedReader lector = request.getReader();
+        Gson gson = new Gson();
+        cliente cli = new cliente();      
+        cli = gson.fromJson(lector, cliente.class);
+        
+        try{
+            
+            ctrl.modificarCliente(cli);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": true}");
+        }
+        catch(Exception e){
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": false}");
+        }
+        
+        
+        
+        /*
+        String nom = request.getParameter("nombre");
         String ape = request.getParameter("apellido");
         Long tel = Long.parseLong(request.getParameter("telefono"));
         
@@ -57,6 +89,7 @@ public class svClienteEditFind extends HttpServlet {
         ctrl.modificarCliente(cli);
         
         response.sendRedirect("index.jsp");
+        */
     }
 
     @Override

@@ -1,3 +1,5 @@
+/* global fetch */
+
 document.addEventListener('DOMContentLoaded',function(){
     // Inputs
     let nombreCargaInput=document.getElementById('txtNombreCarga');
@@ -43,8 +45,8 @@ document.addEventListener('DOMContentLoaded',function(){
     
     // Busqueda de cliente en carga para asignar a dispositivo
     let inputCarga, selectCarga, optionsCarga;
-    inputCarga = document.getElementById("inputCarga");
-    selectCarga = document.getElementById("spinnerCarga");
+    inputCarga = document.getElementById("InputBusqClienteInCargaDisp");
+    selectCarga = document.getElementById("spinnerBusqClienteInCargaDisp");
     optionsCarga = selectCarga.getElementsByTagName("option");
     
     // Evento lanzador de la busqueda para la carga
@@ -134,7 +136,7 @@ document.addEventListener('DOMContentLoaded',function(){
             const cells = rows[i].getElementsByTagName("td");
             let found = false;
             
-            // Buscar solo en las columnas de Nombre, Apellido y Teléfono
+            // Buscar solo en las columnas de Nombre, Apelliddo, Telefono, Dispositivo, Descripcion y Estado. 
             for (let j = 0; j < 5; j++) {
                 if (cells[j].innerText.toLowerCase().includes(input)) {
                     found = true;
@@ -167,7 +169,7 @@ document.addEventListener('DOMContentLoaded',function(){
     CargarListaClientes("spinnerAdminCliBusq");
     CargarListaClientes("spinnerModificacionRegCli");
     CargarListaClientes("spinnerAdminDispBusq");
-    CargarListaClientes("spinnerModificarRegDisp")
+    CargarListaClientes("spinnerModificarRegDisp");
     
     document.getElementById("formCargarCliente").addEventListener('submit',function(event) {
         event.preventDefault();
@@ -208,6 +210,142 @@ document.addEventListener('DOMContentLoaded',function(){
                     console.error('Error', error );
                     alert("Hubo un problema al cargar al cliente: "+ error.message );
                 });  
+    });
+    
+    const BotonBuscarAdminCliente = document.getElementById("BotonBuscarAdminCliente");
+    
+    BotonBuscarAdminCliente.disabled=true;
+    
+    selectAdminCliBusq.addEventListener('change',() => {
+        /*
+        if(selectAdminCliBusq.value){
+            BotonBuscarAdminCliente.disabled=false;
+        } else {
+            BotonBuscarAdminCliente.disabled=true;
+        }
+        */
+        selectAdminCliBusq.value !== null ? BotonBuscarAdminCliente.disabled=false : BotonBuscarAdminCliente.disabled=true;
+    });
+    
+    //Inputs de modificacion de registro en el apartado de admin de clientes
+    const inputModifClienteNombre = document.getElementById("inputModifClienteNombre");
+    const inputModifClienteApellido = document.getElementById("inputModifClienteApellido");
+    const inputModifClienteTelefono = document.getElementById("inputModifClienteTelefono");
+    
+    //Cajas de texto desabilitadas al cargar la pagina de admin clientes
+    inputModifClienteNombre.disabled=true;
+    inputModifClienteApellido.disabled=true;
+    inputModifClienteTelefono.disabled=true;
+    
+    //Variable que guarda la id del cliente buscado
+    let idclienteBusq='';
+    
+    //Funcion que busca y trae los registros de clientes para su modificacion
+    document.getElementById("formAdminBusqCliente").addEventListener('submit',(event) => {
+        //Previene que se recargue la pagina
+        event.preventDefault();
+        
+        idclienteBusq = selectAdminCliBusq.value;
+        
+        //Verifica si la variable idcliente posee un valor
+        if(idclienteBusq)
+        fetch("/ProyectoPracticas/svClienteEditFind?id=" + idclienteBusq )
+        .then(response => response.json())
+        .then(cliente => {
+            if(cliente){
+                //Cargar cajas de texto
+                inputModifClienteNombre.value = cliente.nombre;
+                inputModifClienteApellido.value = cliente.apellido;
+                inputModifClienteTelefono.value = cliente.telefono;
+                
+                //Habilitar Cajas de texto
+                inputModifClienteNombre.disabled=false;
+                inputModifClienteApellido.disabled=false;
+                inputModifClienteTelefono.disabled=false;
+                
+                //Desabilitar boton de buscador y resetear valor del select
+                BotonBuscarAdminCliente.disabled=true;
+                selectAdminCliBusq.value=null;
+                
+                //Habilitar botones de Modificar y Borrar registro
+                botonModifCliente.disabled=false;
+                botonBorrarCliente.disabled=false;
+            }
+            else
+            {
+                alert("cliente no encontrado");
+            }
+        })
+        .catch(error => {
+            console.error('error: ',error);
+            alert("Hubo un error al obtener los datos");
+        });
+    });
+    
+    const botonModifCliente = document.getElementById("botonModifCliente");
+    botonModifCliente.disabled=true;
+    
+    const botonBorrarCliente = document.getElementById("botonBorrarCliente");
+    botonBorrarCliente.disabled=true;
+    
+    const formAdminCliente = document.getElementById("formAdminCliente");
+    
+    formAdminCliente.addEventListener('submit', (event) => {
+       event.preventDefault();
+       
+       if (!inputModifClienteNombre.value || !inputModifClienteApellido.value || !inputModifClienteTelefono.value) {
+            alert("Por favor, complete todos los campos.");
+            return;
+        }
+       
+       const id = idclienteBusq;
+       const nombre = inputModifClienteNombre.value;
+       const apellido = inputModifClienteApellido.value;
+       const telefono = inputModifClienteTelefono.value;
+       
+       const accion = event.submitter.value;
+       
+       let url='';
+       let metodo='';
+       
+       if(accion==="modificar"){
+           url="/ProyectoPracticas/svClienteEditFind";
+           metodo="POST";
+       }
+       else if(accion==="borrar"){
+           url="/ProyectoPracticas/svClienteDestroy";
+           metodo="POST";
+       }
+       
+        fetch(url,{
+            method: metodo,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({id,nombre,apellido,telefono})
+        })
+                .then(response => response.json())
+                .then(datos => {
+                    if(datos.success) {
+                        alert(accion + " realizado con exito");
+                        alert(id + nombre + apellido + telefono);
+                        formAdminCliente.reset();
+                        botonModifCliente.disabled=true;
+                        botonBorrarCliente.disabled=true;
+                        CargarListaClientes("spinnerCarga");
+                        CargarListaClientes("spinnerAdminCliBusq");
+                        CargarListaClientes("spinnerModificacionRegCli");
+                        CargarListaClientes("spinnerAdminDispBusq");
+                        CargarListaClientes("spinnerModificarRegDisp");
+                    }
+                    else {
+                        alert("Hubo un error al realizar la operacion");
+                    }
+        })
+                .catch(error => {
+                    console.error('error: ',error);
+                    alert("Hubo un problema al enviar los datos");
+        });
     });
     
 });

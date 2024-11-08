@@ -82,9 +82,9 @@
                     <form action="" method="">
                         <h3 class="mb-4">Datos del Dispositivo</h3>
                         <input type="text" class="form-control mb-3" placeholder="Tipo de dispositivo" name="" id="">
-                        <textarea class="form-control mb-3" name="" placeholder="Descripcion" id="" rows="3"></textarea>
-                        <input type="text" class="form-control mb-2" id="inputCarga" placeholder="Asignar dueño del dispositivo">
-                        <select id="spinnerCarga" class="form-select mb-3" size="5">
+                        <textarea class="form-control mb-3" name="" placeholder="Descripcion del problema" id="" rows="3"></textarea>
+                        <input type="text" class="form-control mb-2" id="InputBusqClienteInCargaDisp" placeholder="Asignar dueño del dispositivo">
+                        <select id="spinnerBusqClienteInCargaDisp" class="form-select mb-3" size="5">
                             <option value="1">Juan</option>
                             <option value="2">Carlos</option>
                             <option value="3">Maria</option>
@@ -104,7 +104,7 @@
             <div class="row justify-content-evenly">
                 <div class="col-md-5 p-5 rounded adminchargebox">
                     <h3 class="mb-3">Busqueda</h3>
-                    <form action="" method="">
+                    <form action="" method="" id="formAdminBusqCliente">
                         <!-- <select class="form-select mb-3" id="inputGroupSelect01">
                             <option selected>Seleccione la tabla de busqueda</option>
                             <option value="1">Cliente</option>
@@ -125,19 +125,19 @@
                                     <option value="3">Maria</option>
                                     
                                 </select>
-                        <button type="button" class="btn btn-light">Buscar</button>
+                        <button type="submit" id="BotonBuscarAdminCliente" class="btn btn-light">Buscar</button>
                     </form>
                 </div>
                 <div class="col-md-6 p-5 rounded adminchargebox">
-                    <form action="" method="" class="container-fluid">
+                    <form action="" method="" class="container-fluid" id="formAdminCliente">
                         <div class="row">
                             <h3 class="mb-3">Registro</h3>
                             <div class="mb-3 input-group col-5">
-                                <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre">
-                                <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido">
+                                <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre" id="inputModifClienteNombre">
+                                <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido" id="inputModifClienteApellido">
                             </div>
                             <div class="mb-3 col-7">
-                                <input type="text" class="form-control" placeholder="Telefono">
+                                <input type="text" class="form-control" placeholder="Telefono" id="inputModifClienteTelefono">
                             </div>
                             <!--
                             <div class="mb-3 col-9">
@@ -165,12 +165,11 @@
                                 <textarea rows="2" cols="50" class="form-control" placeholder="Descripcion del problema"></textarea>
                             </div>
                             -->
-                            <button type="button" class="btn btn-light">Modificar</button>
-                            <button type="button" class="btn btn-light">Borrar</button>
+                            <button type="submit" class="btn btn-light" value="modificar" id="botonModifCliente">Modificar</button>
+                            <button type="submit" class="btn btn-light" value="borrar" id="botonBorrarCliente">Borrar</button>
                         </div>
-                    </div>
-                    
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -207,12 +206,12 @@
                     </form>
                 </div>
                 <div class="col-md-6 p-5 rounded adminchargebox">
-                    <form action="" method="" class="container-fluid">
+                    <form action="" method="" class="container-fluid" id="formModifDispositivo">
                         <div class="row">
                             <h3 class="mb-3">Registro</h3>
                             <div class="mb-3 input-group col-5">
-                                <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre">
-                                <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido">
+                                <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre cliente">
+                                <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido cliente">
                             </div>
                             <div class="mb-3 col-7">
                                 <input type="text" class="form-control" placeholder="Dispositivo">
@@ -240,9 +239,8 @@
                             <button type="button" class="btn btn-light">Modificar</button>
                             <button type="button" class="btn btn-light">Borrar</button>
                         </div>
-                    </div>
-                    
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
