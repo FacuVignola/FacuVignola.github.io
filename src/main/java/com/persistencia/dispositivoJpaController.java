@@ -20,12 +20,12 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author usr
+ * @author Tacho
  */
 public class dispositivoJpaController implements Serializable {
-    
-    public dispositivoJpaController(){
-        this.emf=Persistence.createEntityManagerFactory("proyectoPU");
+
+    public dispositivoJpaController() {
+        emf=Persistence.createEntityManagerFactory("proyectoPU");
     }
 
     public dispositivoJpaController(EntityManagerFactory emf) {
@@ -42,15 +42,15 @@ public class dispositivoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            cliente dueño = dispositivo.getDueño();
-            if (dueño != null) {
-                dueño = em.getReference(dueño.getClass(), dueño.getId());
-                dispositivo.setDueño(dueño);
+            cliente dueno = dispositivo.getDueno();
+            if (dueno != null) {
+                dueno = em.getReference(dueno.getClass(), dueno.getId());
+                dispositivo.setDueno(dueno);
             }
             em.persist(dispositivo);
-            if (dueño != null) {
-                dueño.getListaDispositivos().add(dispositivo);
-                dueño = em.merge(dueño);
+            if (dueno != null) {
+                dueno.getListaDispositivos().add(dispositivo);
+                dueno = em.merge(dueno);
             }
             em.getTransaction().commit();
         } finally {
@@ -66,20 +66,20 @@ public class dispositivoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             dispositivo persistentdispositivo = em.find(dispositivo.class, dispositivo.getId());
-            cliente dueñoOld = persistentdispositivo.getDueño();
-            cliente dueñoNew = dispositivo.getDueño();
-            if (dueñoNew != null) {
-                dueñoNew = em.getReference(dueñoNew.getClass(), dueñoNew.getId());
-                dispositivo.setDueño(dueñoNew);
+            cliente duenoOld = persistentdispositivo.getDueno();
+            cliente duenoNew = dispositivo.getDueno();
+            if (duenoNew != null) {
+                duenoNew = em.getReference(duenoNew.getClass(), duenoNew.getId());
+                dispositivo.setDueno(duenoNew);
             }
             dispositivo = em.merge(dispositivo);
-            if (dueñoOld != null && !dueñoOld.equals(dueñoNew)) {
-                dueñoOld.getListaDispositivos().remove(dispositivo);
-                dueñoOld = em.merge(dueñoOld);
+            if (duenoOld != null && !duenoOld.equals(duenoNew)) {
+                duenoOld.getListaDispositivos().remove(dispositivo);
+                duenoOld = em.merge(duenoOld);
             }
-            if (dueñoNew != null && !dueñoNew.equals(dueñoOld)) {
-                dueñoNew.getListaDispositivos().add(dispositivo);
-                dueñoNew = em.merge(dueñoNew);
+            if (duenoNew != null && !duenoNew.equals(duenoOld)) {
+                duenoNew.getListaDispositivos().add(dispositivo);
+                duenoNew = em.merge(duenoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -110,10 +110,10 @@ public class dispositivoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The dispositivo with id " + id + " no longer exists.", enfe);
             }
-            cliente dueño = dispositivo.getDueño();
-            if (dueño != null) {
-                dueño.getListaDispositivos().remove(dispositivo);
-                dueño = em.merge(dueño);
+            cliente dueno = dispositivo.getDueno();
+            if (dueno != null) {
+                dueno.getListaDispositivos().remove(dispositivo);
+                dueno = em.merge(dueno);
             }
             em.remove(dispositivo);
             em.getTransaction().commit();

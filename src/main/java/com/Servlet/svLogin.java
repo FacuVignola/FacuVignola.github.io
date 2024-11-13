@@ -37,6 +37,8 @@ public class svLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
             String username = request.getParameter("username");
             String pass = request.getParameter("pass");
             
@@ -49,7 +51,9 @@ public class svLogin extends HttpServlet {
                 response.sendRedirect("index.jsp");
             }
             else{
-                response.sendRedirect("loginError.jsp");
+                HttpSession error = request.getSession(false);
+                error.setAttribute("validacion",validacion);
+                response.sendRedirect("login.jsp");
             }
     }
 

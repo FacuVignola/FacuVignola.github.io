@@ -11,22 +11,31 @@
 <body class="bodybg">
     <header class="pt-5 pb-5 headerbg">
     </header>
-    <section class="grid text-center ">
+    <section class="cajas grid text-center ">
         <div class="caja position-absolute top-50 start-50 translate-middle p-5 border-success">
-            <h1 class="">Inicio de Sesion</h1>
-                <form action="user" action="svLogin" method="POST">
-                    <label for="User">Usuario:</label><br>
-                    <input type="text"placeholder="Usuario" class="textboxform" name="username"><br>
-                    <label for="Contra">Clave:</label><br>  
-                    <input type="password"placeholder="Clave" class="textboxform" name="pass"><br>
-                    <br><!-- No funciona el boton de abajo -->
-                    <!--
-                    <button class="log_button" onclick="window.location.href='index.html'"> Iniciar Sesion </button>
-                    -->
-                    <a class="btn btn-light">Iniciar Sesion</a>
+            <h1 class="border-bottom border-3">Inicio de Sesion</h1>
+                <form action="svLogin" method="POST">
+                    <label for="User" class="fs-5">Usuario:</label><br>
+                    <input type="text"placeholder="Usuario" class="textboxform form-control" name="username"><br>
+                    <label for="Contra" class="fs-5">Clave:</label><br>  
+                    <input type="password"placeholder="Clave" class="textboxform form-control" name="pass"><br>
+                    <br>
+                    
+                    <button type="submit" class="btn btn-light">Iniciar Sesion</a>
                 </form>
         </div>
     </section>
+     <% 
+        Boolean validacion = (Boolean) session.getAttribute("validacion");
+        if (validacion != null && !validacion) { 
+    %>
+        <script>
+            alert("Usuario o Contraseña Incorrecta");
+        </script>
+    <% 
+            session.removeAttribute("validacion");
+        } 
+    %>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

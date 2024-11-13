@@ -5,65 +5,71 @@
  */
 package com.Servlet;
 
-import com.logica.cliente;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.logica.controladoraLogica;
+import com.logica.dispositivo;
+import com.logica.pedido;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.lang.reflect.Type;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author usr
+ * @author FaQ
  */
-@WebServlet(name = "svClienteCreateFind", urlPatterns = {"/svClienteCreateFind"})
-public class svClienteCreateFindE extends HttpServlet {
-
+@WebServlet(name = "svDispositivoDestroy", urlPatterns = {"/svDispositivoDestroy"})
+public class svDispositivoDestroy extends HttpServlet {
     controladoraLogica ctrl = new controladoraLogica();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        List<cliente> listaClientes= new ArrayList<>();
-        
-        listaClientes = ctrl.consultarListaCliente();
-        
-         HttpSession misesion =request.getSession();
-         misesion.setAttribute("listaClientes", listaClientes);
-         response.sendRedirect("MostrarCliente.jsp");
-        
+            
     }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nom = request.getParameter("nombreCarga");
-        String ape = request.getParameter("apellidoCarga");
-        Long tel = Long.parseLong(request.getParameter("telefonoCarga"));
-        
-        cliente cli = new cliente();
-        
-        cli.setNombre(nom);
-        cli.setApellido(ape);
-        cli.setTelefono(tel);
-        
-        ctrl.crearCliente(cli);
-        
-        response.sendRedirect("index.jsp");
-    }
-    
 
     
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+    }
+
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idDisp = Integer.parseInt(request.getParameter("id"));
+        
+        BufferedReader lector = request.getReader();
+        Gson gson= new Gson();
+        Type tipo = new TypeToken<String[]>() {}.getType();
+        String[] datos=gson.fromJson(lector, tipo);
+        
+        pedido ped=ctrl.consultarPedido(Integer.parseInt(datos[4]));
+        
+        try{
+            ctrl.borrarDispositivo(idDisp);
+            ctrl.eliminarPedido(ped.getId());
+            
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": true}");
+        }
+        catch(Exception e)
+        {
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": false}");
+            e.printStackTrace();
+        }
+        
+    }
+
+        @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

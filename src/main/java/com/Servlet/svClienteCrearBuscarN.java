@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -27,32 +30,46 @@ import java.io.BufferedReader;
 @WebServlet(name = "svClienteCrearBuscarN", urlPatterns = {"/svClienteCrearBuscarN"})
 public class svClienteCrearBuscarN extends HttpServlet {
     controladoraLogica ctrl = new controladoraLogica();
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<cliente> listaClientes = ctrl.consultarListaCliente();
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        
+        List<Map<String, String>> ListaClientes = listaClientes.stream()
+        .map((cliente cli) -> {
+            Map<String, String> clienteMap = new HashMap<>();
+            clienteMap.put("id", Integer.toString(cli.getId()));
+            clienteMap.put("nombre", cli.getNombre());
+            clienteMap.put("apellido", cli.getApellido());
+            clienteMap.put("telefono", Long.toString(cli.getTelefono()));
+            return clienteMap;
+            /*
+            "id", Integer.toString(d.getId()),
+            "tipo", d.getTipo(),
+            "modelo", d.getModelo(),
+            "descripcion", d.getDescripcion(),
+            "iddueno", Integer.toString(d.getDueno().getId()),
+            "nombredueno", d.getDueno().getNombre(),
+            "apellidodueno", d.getDueno().getApellido()
+            */
+        }).collect(Collectors.toList());
+        
+        PrintWriter out = response.getWriter();
+        Gson gson = new Gson();
+        out.print(gson.toJson(ListaClientes));
+        out.flush();
+        
+        /*
         List<cliente> listaClientes = new ArrayList<>();
+        
         
         listaClientes = ctrl.consultarListaCliente();
         
@@ -64,7 +81,7 @@ public class svClienteCrearBuscarN extends HttpServlet {
         out.print(gson.toJson(listaClientes));
         out.flush();
         
-        /*
+        
         HttpSession misesion = request.getSession();
         misesion.setAttribute("listaClientes", listaClientes);
         
@@ -78,17 +95,11 @@ public class svClienteCrearBuscarN extends HttpServlet {
         */
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         BufferedReader lector = request.getReader();
         Gson gson = new Gson();
         cliente cli = gson.fromJson(lector, cliente.class);

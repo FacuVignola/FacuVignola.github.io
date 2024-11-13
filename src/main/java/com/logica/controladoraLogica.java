@@ -97,8 +97,8 @@ public class controladoraLogica {
         listaUser = ctrlPersistencia.consultarListaUsuario();
         
         for(usuario user: listaUser){
-            if(usu.getUser().equals(username)){
-                if(usu.getContrasena().equals(pass)){
+            if(user.getUser().equals(username)){
+                if(user.getContrasena().equals(pass)){
                     ingreso=true;
                 }else{ingreso=false;}
             }

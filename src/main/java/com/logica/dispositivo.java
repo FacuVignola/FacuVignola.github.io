@@ -26,16 +26,16 @@ public class dispositivo implements Serializable {
     private String modelo;
     private String descripcion;
     @ManyToOne
-    private cliente dueño;
+    private cliente dueno;
     
 
     public dispositivo (){}
     
-    public dispositivo(String tipo, String modelo, String descripcion, cliente dueño) {
+    public dispositivo(String tipo, String modelo, String descripcion, cliente dueno) {
         this.tipo = tipo;
         this.modelo = modelo;
         this.descripcion = descripcion;
-        this.dueño = dueño;
+        this.dueno = dueno;
     }
 
     public int getId() {
@@ -70,12 +70,12 @@ public class dispositivo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public cliente getDueño() {
-        return dueño;
+    public cliente getDueno() {
+        return dueno;
     }
 
-    public void setDueño(cliente dueño) {
-        this.dueño = dueño;
+    public void setDueno(cliente dueno) {
+        this.dueno = dueno;
     }
     
     

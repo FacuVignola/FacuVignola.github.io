@@ -33,8 +33,17 @@ public class svClienteDestroy extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idBorrar = Integer.parseInt(request.getParameter("idClienteDestroy"));
-        ctrl.eliminarCliente(idBorrar) ;
+        int idBorrar = Integer.parseInt(request.getParameter("id"));
+        
+        try{
+            ctrl.eliminarCliente(idBorrar);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": true}");
+        }
+        catch(Error e){
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": false}");
+        }
     }
 
     @Override

@@ -54,12 +54,12 @@ public class clienteJpaController implements Serializable {
             cliente.setListaDispositivos(attachedListaDispositivos);
             em.persist(cliente);
             for (dispositivo listaDispositivosdispositivo : cliente.getListaDispositivos()) {
-                cliente oldDueñoOfListaDispositivosdispositivo = listaDispositivosdispositivo.getDueño();
-                listaDispositivosdispositivo.setDueño(cliente);
+                cliente oldDuenoOfListaDispositivosdispositivo = listaDispositivosdispositivo.getDueno();
+                listaDispositivosdispositivo.setDueno(cliente);
                 listaDispositivosdispositivo = em.merge(listaDispositivosdispositivo);
-                if (oldDueñoOfListaDispositivosdispositivo != null) {
-                    oldDueñoOfListaDispositivosdispositivo.getListaDispositivos().remove(listaDispositivosdispositivo);
-                    oldDueñoOfListaDispositivosdispositivo = em.merge(oldDueñoOfListaDispositivosdispositivo);
+                if (oldDuenoOfListaDispositivosdispositivo != null) {
+                    oldDuenoOfListaDispositivosdispositivo.getListaDispositivos().remove(listaDispositivosdispositivo);
+                    oldDuenoOfListaDispositivosdispositivo = em.merge(oldDuenoOfListaDispositivosdispositivo);
                 }
             }
             em.getTransaction().commit();
@@ -88,18 +88,18 @@ public class clienteJpaController implements Serializable {
             cliente = em.merge(cliente);
             for (dispositivo listaDispositivosOlddispositivo : listaDispositivosOld) {
                 if (!listaDispositivosNew.contains(listaDispositivosOlddispositivo)) {
-                    listaDispositivosOlddispositivo.setDueño(null);
+                    listaDispositivosOlddispositivo.setDueno(null);
                     listaDispositivosOlddispositivo = em.merge(listaDispositivosOlddispositivo);
                 }
             }
             for (dispositivo listaDispositivosNewdispositivo : listaDispositivosNew) {
                 if (!listaDispositivosOld.contains(listaDispositivosNewdispositivo)) {
-                    cliente oldDueñoOfListaDispositivosNewdispositivo = listaDispositivosNewdispositivo.getDueño();
-                    listaDispositivosNewdispositivo.setDueño(cliente);
+                    cliente oldDuenoOfListaDispositivosNewdispositivo = listaDispositivosNewdispositivo.getDueno();
+                    listaDispositivosNewdispositivo.setDueno(cliente);
                     listaDispositivosNewdispositivo = em.merge(listaDispositivosNewdispositivo);
-                    if (oldDueñoOfListaDispositivosNewdispositivo != null && !oldDueñoOfListaDispositivosNewdispositivo.equals(cliente)) {
-                        oldDueñoOfListaDispositivosNewdispositivo.getListaDispositivos().remove(listaDispositivosNewdispositivo);
-                        oldDueñoOfListaDispositivosNewdispositivo = em.merge(oldDueñoOfListaDispositivosNewdispositivo);
+                    if (oldDuenoOfListaDispositivosNewdispositivo != null && !oldDuenoOfListaDispositivosNewdispositivo.equals(cliente)) {
+                        oldDuenoOfListaDispositivosNewdispositivo.getListaDispositivos().remove(listaDispositivosNewdispositivo);
+                        oldDuenoOfListaDispositivosNewdispositivo = em.merge(oldDuenoOfListaDispositivosNewdispositivo);
                     }
                 }
             }
@@ -134,7 +134,7 @@ public class clienteJpaController implements Serializable {
             }
             List<dispositivo> listaDispositivos = cliente.getListaDispositivos();
             for (dispositivo listaDispositivosdispositivo : listaDispositivos) {
-                listaDispositivosdispositivo.setDueño(null);
+                listaDispositivosdispositivo.setDueno(null);
                 listaDispositivosdispositivo = em.merge(listaDispositivosdispositivo);
             }
             em.remove(cliente);
